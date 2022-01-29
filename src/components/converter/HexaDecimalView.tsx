@@ -13,6 +13,7 @@ import MagicInput from "../semantic/MagicInput";
 
 const HexaDecimalView: React.FC = () => {
   const [input, setInput] = useState("");
+  const [isUpper, toggle] = useState(false);
 
   const hexa = useMemo(
     () =>
@@ -20,8 +21,9 @@ const HexaDecimalView: React.FC = () => {
         .flatNext(BigInt)
         .next(Opt.map((c) => HexaDecimal.from(c)))
         .next(Opt.or(""))
+        .next((res) => (isUpper ? res.toUpperCase() : res.toLowerCase()))
         .end(),
-    [input]
+    [input, isUpper]
   );
 
   const isInputValidOrEmpty = useMemo(
@@ -55,7 +57,17 @@ const HexaDecimalView: React.FC = () => {
           }
           bind={(_) => {}}
           value={hexa}
-        />
+        >
+          <button
+            className="absolute right-1 bottom-2 z-20 text-sm px-2 py-1 rounded bg-gray-900 hover:bg-gray-800"
+            onClick={(e) => {
+              e.preventDefault();
+              toggle((prev) => !prev);
+            }}
+          >
+            {isUpper ? "upper" : "lower"}
+          </button>
+        </MagicInput>
       </div>
     </>
   );
