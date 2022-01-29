@@ -17,8 +17,8 @@ export namespace HexaDecimal {
    * @returns A HexaDecimal from that integer
    */
   export const from = (num: bigint): t => {
-    const curr = num % 16n;
-    const rest = num / 16n;
+    const curr = num % BigInt(16);
+    const rest = num / BigInt(16);
 
     const front = rest > 0 ? from(rest) : "";
 
@@ -26,20 +26,20 @@ export namespace HexaDecimal {
   };
 
   export const hexadigit = (digit: bigint): t => {
-    if (digit < 10n) {
+    if (digit < BigInt(10)) {
       return `${digit}`;
     }
 
     switch (digit) {
-      case 10n:
+      case BigInt(10):
         return "a";
-      case 11n:
+      case BigInt(11):
         return "b";
-      case 12n:
+      case BigInt(12):
         return "c";
-      case 13n:
+      case BigInt(13):
         return "d";
-      case 14n:
+      case BigInt(14):
         return "e";
       default:
         return "f";
